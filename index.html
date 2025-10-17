@@ -1,361 +1,109 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Modern Calculator</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My GitHub Pages Site</title>
   <style>
-    :root{
-      --bg:#0f1724; /* deep navy */
-      --card:#0b1220cc; /* translucent card */
-      --glass: rgba(255,255,255,0.04);
-      --accent:#7c5cff;
-      --accent-2:#00d4ff;
-      --muted:#94a3b8;
-      --glass-border: rgba(255,255,255,0.06);
-      --btn-bg: rgba(255,255,255,0.03);
-      --danger:#ff6b6b;
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      min-height:100%;
-      background: radial-gradient(1000px 600px at 10% 20%, rgba(124,92,255,0.12), transparent 10%),
-                  radial-gradient(900px 600px at 90% 80%, rgba(0,212,255,0.06), transparent 12%),
-                  var(--bg);
-      color:#e6eef8;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:32px;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
     }
 
-    .container{
-      width:100%;
-      max-width:980px;
-      display:grid;
-      grid-template-columns: 1fr 360px;
-      gap:28px;
-      align-items:start;
+    header {
+      background-color: #1e88e5;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.5rem;
+      font-weight: bold;
     }
 
-    /* Card */
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border:1px solid var(--glass-border);
-      backdrop-filter: blur(8px) saturate(120%);
-      border-radius:18px;
-      padding:20px;
-      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+    main {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
     }
 
-    header.site-header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:12px;
-    }
-    .logo{display:flex;gap:12px;align-items:center}
-    .logo .mark{
-      width:46px;height:46px;border-radius:10px;
-      background:linear-gradient(135deg,var(--accent),var(--accent-2));
-      display:flex;align-items:center;justify-content:center;font-weight:800;color:white;font-size:18px;box-shadow:0 6px 18px rgba(124,92,255,0.18)
-    }
-    h1{font-size:18px;margin:0}
-    p.lead{margin:0;color:var(--muted);font-size:13px}
-
-    /* Calculator area */
-    .calc{
-      margin-top:6px;
-    }
-    .display{
-      height:84px;
-      border-radius:12px;
-      padding:12px 16px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:flex-end;
-      gap:6px;
-      background:linear-gradient(180deg, rgba(255,255,255,0.017), rgba(255,255,255,0.01));
-      border:1px solid var(--glass-border);
-      margin-bottom:14px;
-    }
-    .display .prev{
-      font-size:14px;color:var(--muted);opacity:0.9;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap
-    }
-    .display .current{
-      font-size:28px;font-weight:700;letter-spacing:0.6px;word-break:break-all
+    nav {
+      width: 260px;
+      background: #f4f4f4;
+      border-right: 1px solid #ddd;
+      padding: 1rem;
+      box-sizing: border-box;
+      overflow-y: auto;
     }
 
-    .pad{
-      display:grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap:10px;
+    nav h2 {
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
+      color: #333;
     }
-    button.key{
-      background:var(--btn-bg);
-      border-radius:12px;
-      padding:18px 12px;font-size:18px;font-weight:600;border:1px solid transparent;
-      box-shadow: 0 6px 16px rgba(2,6,23,0.55), inset 0 -2px 0 rgba(255,255,255,0.01);
-      cursor:pointer;color:inherit;transition:all .16s ease;backdrop-filter: blur(6px);
-    }
-    button.key:active{transform:translateY(2px) scale(.998)}
-    button.op{
-      background:linear-gradient(180deg, rgba(124,92,255,0.14), rgba(0,212,255,0.03));
-      border:1px solid rgba(255,255,255,0.06);
-    }
-    button.equal{
-      grid-column: span 2;
-      background:linear-gradient(90deg,var(--accent),var(--accent-2));
-      color:#051029;font-weight:800;font-size:18px;box-shadow:0 8px 28px rgba(124,92,255,0.24)
-    }
-    button.danger{background:linear-gradient(180deg, rgba(255,107,107,0.14), rgba(255,107,107,0.03));}
 
-    /* Side panel / history */
-    .side{
-      display:flex;flex-direction:column;gap:12px;
+    nav a {
+      display: block;
+      padding: 8px 10px;
+      margin-bottom: 5px;
+      text-decoration: none;
+      color: #1e88e5;
+      border-radius: 6px;
+      transition: background 0.2s;
     }
-    .history{
-      padding:12px;border-radius:12px;height:380px;overflow:auto;background:var(--glass);
-      border:1px solid var(--glass-border);
+
+    nav a:hover {
+      background: #e0e0e0;
     }
-    .history h3{margin:0 0 8px 0;font-size:14px}
-    .entry{display:flex;justify-content:space-between;gap:6px;padding:8px;border-radius:8px;margin-bottom:8px;background:linear-gradient(180deg, rgba(255,255,255,0.012), transparent)}
-    .entry .expr{color:var(--muted);font-weight:600}
-    .entry .res{font-weight:700}
 
-    footer.controls{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:8px}
-    .toggles{display:flex;gap:8px}
-    .btn-ghost{background:transparent;border:1px solid var(--glass-border);padding:8px 12px;border-radius:10px;cursor:pointer}
+    iframe {
+      flex: 1;
+      border: none;
+      width: 100%;
+      height: 100%;
+    }
 
-    /* Responsive */
-    @media (max-width:880px){
-      .container{grid-template-columns: 1fr;max-width:460px}
-      .side{order:2}
+    footer {
+      text-align: center;
+      background: #f4f4f4;
+      padding: 0.5rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    @media (max-width: 700px) {
+      main {
+        flex-direction: column;
+      }
+      nav {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+      }
+      iframe {
+        height: 70vh;
+      }
     }
   </style>
 </head>
 <body>
-  <main class="container">
-    <section class="card">
-      <header class="site-header">
-        <div class="logo">
-          <div class="mark">C</div>
-          <div>
-            <h1>Modern Calculator</h1>
-            <p class="lead">A clean, responsive calculator with history & keyboard support</p>
-          </div>
-        </div>
-        <div>
-          <button class="btn-ghost" id="clear-history">Clear History</button>
-        </div>
-      </header>
+  <header>My GitHub Pages Site</header>
 
-      <div class="calc">
-        <div class="display" id="display">
-          <div class="prev" id="prev">&nbsp;</div>
-          <div class="current" id="current">0</div>
-        </div>
+  <main>
+    <nav>
+      <h2>Pages</h2>
+      <a href="about.html" target="content-frame">About</a>
+      <a href="contact.html" target="content-frame">Contact</a>
+      <a href="projects.html" target="content-frame">Projects</a>
+      <h2>Apps</h2>
+      <a href="calculator.html" target="content-frame">🧮 Calculator</a>
+      <a href="sketchbook.html" target="content-frame">🎨 Sketchbook</a>
+    </nav>
 
-        <div class="pad" id="pad">
-          <button class="key danger" data-action="clear">AC</button>
-          <button class="key" data-action="back">⌫</button>
-          <button class="key" data-value="%">%</button>
-          <button class="key op" data-value="/">÷</button>
-
-          <button class="key" data-value="7">7</button>
-          <button class="key" data-value="8">8</button>
-          <button class="key" data-value="9">9</button>
-          <button class="key op" data-value="*">×</button>
-
-          <button class="key" data-value="4">4</button>
-          <button class="key" data-value="5">5</button>
-          <button class="key" data-value="6">6</button>
-          <button class="key op" data-value="-">−</button>
-
-          <button class="key" data-value="1">1</button>
-          <button class="key" data-value="2">2</button>
-          <button class="key" data-value="3">3</button>
-          <button class="key op" data-value="+">+</button>
-
-          <button class="key" data-value="0" style="grid-column: span 2;">0</button>
-          <button class="key" data-value=".">.</button>
-          <button class="key equal" data-action="equals">=</button>
-        </div>
-
-        <footer class="controls">
-          <small style="color:var(--muted)">Tip: try your keyboard (0-9, + - * /, Enter, Backspace)</small>
-          <div class="toggles">
-            <button class="btn-ghost" id="copy-result">Copy</button>
-            <button class="btn-ghost" id="download-html">Download</button>
-          </div>
-        </footer>
-      </div>
-    </section>
-
-    <aside class="side">
-      <div class="card history" id="history">
-        <h3>History</h3>
-        <div id="entries"></div>
-      </div>
-
-      <div class="card" style="display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;align-items:center;justify-content:space-between">
-          <strong>Settings</strong>
-          <label style="font-size:13px;color:var(--muted)">
-            <input type="checkbox" id="compact"> Compact
-          </label>
-        </div>
-        <p style="margin:0;color:var(--muted);font-size:13px">Precision and safety: this calculator sanitizes input and supports percent (%) conversion.</p>
-      </div>
-    </aside>
+    <iframe name="content-frame" src="about.html"></iframe>
   </main>
 
-  <script>
-    (()=>{
-      const prevEl = document.getElementById('prev');
-      const curEl = document.getElementById('current');
-      const pad = document.getElementById('pad');
-      const entries = document.getElementById('entries');
-      const historyEl = document.getElementById('history');
-      const clearHistoryBtn = document.getElementById('clear-history');
-      const copyBtn = document.getElementById('copy-result');
-      const downloadBtn = document.getElementById('download-html');
-
-      let expr = '';
-      let prev = '';
-      let hist = JSON.parse(localStorage.getItem('calc_history') || '[]');
-
-      function render(){
-        curEl.textContent = expr || '0';
-        prevEl.textContent = prev ? prev : '\u00A0';
-        renderHistory();
-      }
-
-      function renderHistory(){
-        entries.innerHTML = '';
-        if(hist.length === 0){ entries.innerHTML = '<div style="color:var(--muted);font-size:13px">No calculations yet</div>'; return }
-        hist.slice().reverse().forEach((h,idx)=>{
-          const div = document.createElement('div'); div.className='entry';
-          const e = document.createElement('div'); e.className='expr'; e.textContent = h.expr;
-          const r = document.createElement('div'); r.className='res'; r.textContent = h.res;
-          div.appendChild(e); div.appendChild(r);
-          div.addEventListener('click', ()=>{ expr = h.res.toString(); prev = h.expr + ' ='; render(); });
-          entries.appendChild(div);
-        });
-      }
-
-      function pushHistory(e){
-        hist.push(e); if(hist.length>80) hist.shift();
-        localStorage.setItem('calc_history', JSON.stringify(hist));
-        renderHistory();
-      }
-
-      function sanitizeForEval(s){
-        // allow digits, spaces, parentheses, operators + - * / . and %
-        if(!/^[0-9+\-*/().%\s]*$/.test(s)) return null;
-        return s;
-      }
-
-      function compute(s){
-        const sanitized = sanitizeForEval(s);
-        if(sanitized === null) throw new Error('Invalid characters');
-        // Replace percent: convert number% to (number/100)
-        // naive approach: replace occurrences of a number followed by % with (number/100)
-        const withPct = sanitized.replace(/(\d+(?:\.\d+)?)%/g, '($1/100)');
-        // disallow empty
-        if(!withPct.trim()) return 0;
-        // final eval in a safe Function wrapper
-        // Note: still for local usage only. Not submitting to any server.
-        // limit length
-        if(withPct.length > 240) throw new Error('Expression too long');
-        // eslint-disable-next-line no-new-func
-        const fn = new Function('return ' + withPct);
-        let result = fn();
-        if(typeof result === 'number' && !Number.isFinite(result)) throw new Error('Math error');
-        // round to sensible precision
-        if(typeof result === 'number'){
-          result = Math.round((result + Number.EPSILON) * 1e12)/1e12;
-        }
-        return result;
-      }
-
-      pad.addEventListener('click', (ev)=>{
-        const btn = ev.target.closest('button'); if(!btn) return;
-        const val = btn.dataset.value; const action = btn.dataset.action;
-        if(action === 'clear') { expr = ''; prev = ''; render(); return }
-        if(action === 'back') { expr = expr.slice(0,-1); render(); return }
-        if(action === 'equals'){
-          try{
-            const res = compute(expr || '0');
-            prev = expr + ' ='; expr = String(res);
-            pushHistory({expr: prev.replace(' =',''), res: expr});
-            render();
-          }catch(e){ prev = 'Error'; expr = ''; render(); setTimeout(()=>{prev='';render()},900); }
-          return;
-        }
-        // append value
-        if(val){
-          // prevent multiple dots in the currently typed number
-          if(val === '.'){
-            // find last token
-            const m = expr.match(/(\d*\.?\d*)$/);
-            if(m && m[0].includes('.')) return; // ignore second dot
-          }
-          expr += val;
-          render();
-        }
-      });
-
-      // keyboard support
-      window.addEventListener('keydown', (ev)=>{
-        const key = ev.key;
-        if((/^[0-9]$/).test(key)) { expr += key; render(); ev.preventDefault(); return }
-        if(key === '.') { expr += '.'; render(); ev.preventDefault(); return }
-        if(key === 'Backspace'){ expr = expr.slice(0,-1); render(); ev.preventDefault(); return }
-        if(key === 'Enter' || key === '='){
-          try{ const res = compute(expr || '0'); prev = expr + ' ='; expr = String(res); pushHistory({expr: prev.replace(' =',''), res: expr}); render(); }
-          catch(e){ prev='Error'; expr=''; render(); setTimeout(()=>{prev='';render()},900); }
-          ev.preventDefault(); return
-        }
-        if(key === '%' || key === '*' || key === '+' || key === '-' || key === '/' || key === '(' || key === ')'){
-          expr += key; render(); ev.preventDefault(); return
-        }
-      });
-
-      // history clear
-      clearHistoryBtn.addEventListener('click', ()=>{ hist=[]; localStorage.removeItem('calc_history'); renderHistory(); });
-
-      // copy
-      copyBtn.addEventListener('click', async ()=>{
-        try{ await navigator.clipboard.writeText(curEl.textContent || '0'); copyBtn.textContent='Copied'; setTimeout(()=>copyBtn.textContent='Copy',900) }catch(e){ copyBtn.textContent='Nope'; setTimeout(()=>copyBtn.textContent='Copy',900) }
-      });
-
-      // download current HTML (single-file)
-      downloadBtn.addEventListener('click', ()=>{
-        const html = '<!doctype html>\n' + document.documentElement.outerHTML;
-        const blob = new Blob([html], {type:'text/html'});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a'); a.href=url; a.download='calculator.html'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-      });
-
-      // load initial history
-      render();
-
-      // compact toggle
-      document.getElementById('compact').addEventListener('change', (e)=>{
-        document.querySelectorAll('button.key').forEach(b=>{ b.style.padding = e.target.checked ? '12px 10px' : '18px 12px' })
-      });
-
-    })();
-  </script>
+  <footer>© 2025 My GitHub Pages</footer>
 </body>
 </html>
